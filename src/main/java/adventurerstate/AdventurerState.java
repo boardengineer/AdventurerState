@@ -3,10 +3,12 @@ package adventurerstate;
 import adventurerstate.actions.PrecludeActionState;
 import adventurerstate.powers.*;
 import adventurerstate.quests.AbstractQuestState;
+import adventurerstate.quests.TheLuckyPackState;
 import basemod.BaseMod;
 import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
+import savestate.StateElement;
 import savestate.StateFactories;
 import savestate.actions.ActionState;
 import savestate.powers.PowerState;
@@ -16,13 +18,14 @@ import theFishing.cards.CatchOfTheDay;
 import theFishing.cards.EndsOfTheEarth;
 import theFishing.powers.*;
 import theFishing.quest.quests.AbstractQuest;
+import theFishing.quest.quests.TheLuckyPack;
 
 import java.util.HashMap;
 
 @SpireInitializer
 public class AdventurerState implements PostInitializeSubscriber, EditCardsSubscriber {
-    public static HashMap<String, AbstractQuestState.QuestFactories> questByIdMap;
-    public static HashMap<Class<? extends AbstractQuest>, AbstractQuestState.QuestFactories> questByTypeMap;
+    public static HashMap<String, AbstractQuestState.QuestFactories> questByIdMap = new HashMap<>();
+    public static HashMap<Class<? extends AbstractQuest>, AbstractQuestState.QuestFactories> questByTypeMap = new HashMap<>();
 
     public static void initialize() {
         BaseMod.subscribe(new AdventurerState());
@@ -34,6 +37,17 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
         populateActionsFactory();
         populatePowerFactory();
         populateCardFactories();
+        populateQuestFactories();
+
+        StateElement.ElementFactories stateFactories = new StateElement.ElementFactories(() -> new AdventurerStateElement(), json -> new AdventurerStateElement(json), jsonObject -> new AdventurerStateElement(jsonObject));
+        StateFactories.elementFactories.put(AdventurerStateElement.ELEMENT_KEY, stateFactories);
+    }
+
+    private void populateQuestFactories() {
+        AbstractQuestState.QuestFactories theLuckyPackFactories = new AbstractQuestState.QuestFactories(quest -> new TheLuckyPackState(quest), jsonObject -> new TheLuckyPackState(jsonObject));
+
+        questByIdMap.put(TheLuckyPackState.QUEST_KEY, theLuckyPackFactories);
+        questByTypeMap.put(TheLuckyPack.class, theLuckyPackFactories);
     }
 
     private void populateCurrentActionsFactory() {
