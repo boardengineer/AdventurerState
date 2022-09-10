@@ -1,6 +1,7 @@
 package adventurerstate;
 
 import adventurerstate.actions.PrecludeActionState;
+import adventurerstate.cards.AbstractFishingCardState;
 import adventurerstate.powers.*;
 import adventurerstate.quests.AbstractQuestState;
 import adventurerstate.quests.TheFishOPediaState;
@@ -10,12 +11,14 @@ import basemod.BaseMod;
 import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
+import savestate.CardState;
 import savestate.StateElement;
 import savestate.StateFactories;
 import savestate.actions.ActionState;
 import savestate.powers.PowerState;
 import theFishing.TheFishing;
 import theFishing.actions.PrecludeAction;
+import theFishing.cards.AbstractFishingCard;
 import theFishing.cards.CatchOfTheDay;
 import theFishing.cards.EndsOfTheEarth;
 import theFishing.powers.*;
@@ -80,16 +83,24 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
         StateFactories.powerByIdMap
                 .put(DrawLessNextTurnPower.ID, new PowerState.PowerFactories(power -> new DrawLessNextTurnPowerState(power)));
         StateFactories.powerByIdMap
-                .put(MintConditionPower.ID, new PowerState.PowerFactories(power -> new MintConditionPowerState(power), jsonString -> new MintConditionPowerState(jsonString), jsonObject -> new MintConditionPowerState(jsonObject)));
+                .put(MintConditionPower.ID, new PowerState.PowerFactories(power -> new MintConditionPowerState(power)));
         StateFactories.powerByIdMap
                 .put(RidiculousFishingPower.ID, new PowerState.PowerFactories(power -> new RidiculousFishingPowerState(power)));
         StateFactories.powerByIdMap
                 .put(TakeItEasyPower.ID, new PowerState.PowerFactories(power -> new TakeItEasyPowerState(power)));
         StateFactories.powerByIdMap
                 .put(TripwirePower.ID, new PowerState.PowerFactories(power -> new TripwirePowerState(power)));
+        StateFactories.powerByIdMap
+                .put(VexingDealPower.ID, new PowerState.PowerFactories(power -> new VexingDealPowerState(power)));
+
     }
 
     private void populateCardFactories() {
+        CardState.CardFactories fishCardFactories = new CardState.CardFactories(card -> new AbstractFishingCardState(card), json -> new AbstractFishingCardState(json), jsonObject -> new AbstractFishingCardState(jsonObject));
+
+        StateFactories.cardFactoriesByType.put(AbstractFishingCard.class, fishCardFactories);
+        StateFactories.cardFactoriesByTypeName
+                .put(AbstractFishingCardState.TYPE_KEY, fishCardFactories);
     }
 
     @Override
