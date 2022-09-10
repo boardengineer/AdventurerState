@@ -1,13 +1,16 @@
 package adventurerstate;
 
+import adventurerstate.actions.PrecludeActionState;
 import adventurerstate.powers.*;
 import basemod.BaseMod;
 import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import savestate.StateFactories;
+import savestate.actions.ActionState;
 import savestate.powers.PowerState;
 import theFishing.TheFishing;
+import theFishing.actions.PrecludeAction;
 import theFishing.cards.CatchOfTheDay;
 import theFishing.cards.EndsOfTheEarth;
 import theFishing.powers.*;
@@ -30,6 +33,8 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
     }
 
     private void populateActionsFactory() {
+        StateFactories.actionByClassMap
+                .put(PrecludeAction.class, new ActionState.ActionFactories(action -> new PrecludeActionState()));
     }
 
     private void populatePowerFactory() {
@@ -41,6 +46,8 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
                 .put(DrawLessNextTurnPower.ID, new PowerState.PowerFactories(power -> new DrawLessNextTurnPowerState(power)));
         StateFactories.powerByIdMap
                 .put(MintConditionPower.ID, new PowerState.PowerFactories(power -> new MintConditionPowerState(power), jsonString -> new MintConditionPowerState(jsonString), jsonObject -> new MintConditionPowerState(jsonObject)));
+        StateFactories.powerByIdMap
+                .put(RidiculousFishingPower.ID, new PowerState.PowerFactories(power -> new RidiculousFishingPowerState(power)));
         StateFactories.powerByIdMap
                 .put(TakeItEasyPower.ID, new PowerState.PowerFactories(power -> new TakeItEasyPowerState(power)));
         StateFactories.powerByIdMap
