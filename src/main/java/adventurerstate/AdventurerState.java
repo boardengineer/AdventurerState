@@ -3,10 +3,7 @@ package adventurerstate;
 import adventurerstate.actions.PrecludeActionState;
 import adventurerstate.cards.AbstractFishingCardState;
 import adventurerstate.powers.*;
-import adventurerstate.quests.AbstractQuestState;
-import adventurerstate.quests.TheFishOPediaState;
-import adventurerstate.quests.TheLuckyPackState;
-import adventurerstate.quests.TheStormState;
+import adventurerstate.quests.*;
 import basemod.BaseMod;
 import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
@@ -22,10 +19,7 @@ import theFishing.cards.AbstractFishingCard;
 import theFishing.cards.CatchOfTheDay;
 import theFishing.cards.EndsOfTheEarth;
 import theFishing.powers.*;
-import theFishing.quest.quests.AbstractQuest;
-import theFishing.quest.quests.TheFishOPedia;
-import theFishing.quest.quests.TheLuckyPack;
-import theFishing.quest.quests.TheStorm;
+import theFishing.quest.quests.*;
 
 import java.util.HashMap;
 
@@ -65,6 +59,11 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
 
         questByIdMap.put(TheStormState.QUEST_KEY, theStormFactories);
         questByTypeMap.put(TheStorm.class, theStormFactories);
+
+        AbstractQuestState.QuestFactories thePrismaticPortalFactories = new AbstractQuestState.QuestFactories(quest -> new ThePrismaticPortalState(quest), jsonObject -> new ThePrismaticPortalState(jsonObject));
+
+        questByIdMap.put(ThePrismaticPortalState.QUEST_KEY, thePrismaticPortalFactories);
+        questByTypeMap.put(ThePrismaticPortal.class, thePrismaticPortalFactories);
     }
 
     private void populateCurrentActionsFactory() {
@@ -82,6 +81,8 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
                 .put(CollectorPower.ID, new PowerState.PowerFactories(power -> new CollectorPowerState(power), jsonString -> new CollectorPowerState(jsonString), jsonObject -> new CollectorPowerState(jsonObject)));
         StateFactories.powerByIdMap
                 .put(DrawLessNextTurnPower.ID, new PowerState.PowerFactories(power -> new DrawLessNextTurnPowerState(power)));
+        StateFactories.powerByIdMap
+                .put(FinishingTouchesPower.ID, new PowerState.PowerFactories(power -> new FinishingTouchesPowerState(power)));
         StateFactories.powerByIdMap
                 .put(FullySleevedPower.ID, new PowerState.PowerFactories(power -> new FullySleevedPowerState(power)));
         StateFactories.powerByIdMap
