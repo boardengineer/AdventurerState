@@ -2,6 +2,7 @@ package adventurerstate;
 
 import adventurerstate.actions.PrecludeActionState;
 import adventurerstate.powers.*;
+import adventurerstate.quests.AbstractQuestState;
 import basemod.BaseMod;
 import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
@@ -14,9 +15,15 @@ import theFishing.actions.PrecludeAction;
 import theFishing.cards.CatchOfTheDay;
 import theFishing.cards.EndsOfTheEarth;
 import theFishing.powers.*;
+import theFishing.quest.quests.AbstractQuest;
+
+import java.util.HashMap;
 
 @SpireInitializer
 public class AdventurerState implements PostInitializeSubscriber, EditCardsSubscriber {
+    public static HashMap<String, AbstractQuestState.QuestFactories> questByIdMap;
+    public static HashMap<Class<? extends AbstractQuest>, AbstractQuestState.QuestFactories> questByTypeMap;
+
     public static void initialize() {
         BaseMod.subscribe(new AdventurerState());
     }
