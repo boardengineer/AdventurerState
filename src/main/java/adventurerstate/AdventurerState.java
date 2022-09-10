@@ -83,6 +83,8 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
         StateFactories.powerByIdMap
                 .put(DrawLessNextTurnPower.ID, new PowerState.PowerFactories(power -> new DrawLessNextTurnPowerState(power)));
         StateFactories.powerByIdMap
+                .put(FullySleevedPower.ID, new PowerState.PowerFactories(power -> new FullySleevedPowerState(power)));
+        StateFactories.powerByIdMap
                 .put(MintConditionPower.ID, new PowerState.PowerFactories(power -> new MintConditionPowerState(power)));
         StateFactories.powerByIdMap
                 .put(RidiculousFishingPower.ID, new PowerState.PowerFactories(power -> new RidiculousFishingPowerState(power)));
