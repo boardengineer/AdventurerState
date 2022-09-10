@@ -1,5 +1,6 @@
 package adventurerstate;
 
+import adventurerstate.actions.MopUpActionState;
 import adventurerstate.actions.PrecludeActionState;
 import adventurerstate.cards.AbstractFishingCardState;
 import adventurerstate.powers.*;
@@ -12,8 +13,10 @@ import savestate.CardState;
 import savestate.StateElement;
 import savestate.StateFactories;
 import savestate.actions.ActionState;
+import savestate.actions.CurrentActionState;
 import savestate.powers.PowerState;
 import theFishing.TheFishing;
+import theFishing.actions.MopUpAction;
 import theFishing.actions.PrecludeAction;
 import theFishing.cards.AbstractFishingCard;
 import theFishing.cards.CatchOfTheDay;
@@ -64,9 +67,16 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
 
         questByIdMap.put(ThePrismaticPortalState.QUEST_KEY, thePrismaticPortalFactories);
         questByTypeMap.put(ThePrismaticPortal.class, thePrismaticPortalFactories);
+
+        AbstractQuestState.QuestFactories theHarpoonFactories = new AbstractQuestState.QuestFactories(quest -> new TheHarpoonState(quest), jsonObject -> new TheHarpoonState(jsonObject));
+
+        questByIdMap.put(TheHarpoonState.QUEST_KEY, theHarpoonFactories);
+        questByTypeMap.put(TheHarpoon.class, theHarpoonFactories);
     }
 
     private void populateCurrentActionsFactory() {
+        StateFactories.currentActionByClassMap
+                .put(MopUpAction.class, new CurrentActionState.CurrentActionFactories(action -> new MopUpActionState(action)));
     }
 
     private void populateActionsFactory() {
