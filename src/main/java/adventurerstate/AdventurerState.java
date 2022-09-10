@@ -3,7 +3,9 @@ package adventurerstate;
 import adventurerstate.actions.PrecludeActionState;
 import adventurerstate.powers.*;
 import adventurerstate.quests.AbstractQuestState;
+import adventurerstate.quests.TheFishOPediaState;
 import adventurerstate.quests.TheLuckyPackState;
+import adventurerstate.quests.TheStormState;
 import basemod.BaseMod;
 import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
@@ -18,7 +20,9 @@ import theFishing.cards.CatchOfTheDay;
 import theFishing.cards.EndsOfTheEarth;
 import theFishing.powers.*;
 import theFishing.quest.quests.AbstractQuest;
+import theFishing.quest.quests.TheFishOPedia;
 import theFishing.quest.quests.TheLuckyPack;
+import theFishing.quest.quests.TheStorm;
 
 import java.util.HashMap;
 
@@ -48,6 +52,16 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
 
         questByIdMap.put(TheLuckyPackState.QUEST_KEY, theLuckyPackFactories);
         questByTypeMap.put(TheLuckyPack.class, theLuckyPackFactories);
+
+        AbstractQuestState.QuestFactories theFishoPediaFactories = new AbstractQuestState.QuestFactories(quest -> new TheFishOPediaState(quest), jsonObject -> new TheFishOPediaState(jsonObject));
+
+        questByIdMap.put(TheFishOPediaState.QUEST_KEY, theFishoPediaFactories);
+        questByTypeMap.put(TheFishOPedia.class, theFishoPediaFactories);
+
+        AbstractQuestState.QuestFactories theStormFactories = new AbstractQuestState.QuestFactories(quest -> new TheStormState(quest), jsonObject -> new TheStormState(jsonObject));
+
+        questByIdMap.put(TheStormState.QUEST_KEY, theStormFactories);
+        questByTypeMap.put(TheStorm.class, theStormFactories);
     }
 
     private void populateCurrentActionsFactory() {
