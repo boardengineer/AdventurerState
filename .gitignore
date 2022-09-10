@@ -21,3 +21,8 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+*.lst
+AdventurerState.iml
+target/maven-archiver/pom.properties
+target/antrun/build-main.xml
+target/classes/ModTheSpire.json
