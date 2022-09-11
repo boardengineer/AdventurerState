@@ -1,7 +1,9 @@
 package adventurerstate;
 
+import adventurerstate.actions.DiscardPileSetupActionState;
 import adventurerstate.actions.MopUpActionState;
 import adventurerstate.actions.PrecludeActionState;
+import adventurerstate.actions.WanderActionState;
 import adventurerstate.cards.AbstractFishingCardState;
 import adventurerstate.powers.*;
 import adventurerstate.quests.*;
@@ -16,8 +18,10 @@ import savestate.actions.ActionState;
 import savestate.actions.CurrentActionState;
 import savestate.powers.PowerState;
 import theFishing.TheFishing;
+import theFishing.actions.DiscardPileSetupAction;
 import theFishing.actions.MopUpAction;
 import theFishing.actions.PrecludeAction;
+import theFishing.actions.WanderAction;
 import theFishing.cards.AbstractFishingCard;
 import theFishing.cards.CatchOfTheDay;
 import theFishing.cards.EndsOfTheEarth;
@@ -77,6 +81,10 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
     private void populateCurrentActionsFactory() {
         StateFactories.currentActionByClassMap
                 .put(MopUpAction.class, new CurrentActionState.CurrentActionFactories(action -> new MopUpActionState(action)));
+        StateFactories.currentActionByClassMap
+                .put(WanderAction.class, new CurrentActionState.CurrentActionFactories(action -> new WanderActionState(action)));
+        StateFactories.currentActionByClassMap
+                .put(DiscardPileSetupAction.class, new CurrentActionState.CurrentActionFactories(action -> new DiscardPileSetupActionState(action)));
     }
 
     private void populateActionsFactory() {
@@ -97,6 +105,8 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
                 .put(FullySleevedPower.ID, new PowerState.PowerFactories(power -> new FullySleevedPowerState(power)));
         StateFactories.powerByIdMap
                 .put(MintConditionPower.ID, new PowerState.PowerFactories(power -> new MintConditionPowerState(power)));
+        StateFactories.powerByIdMap
+                .put(ReservesPower.ID, new PowerState.PowerFactories(power -> new ReservesPowerState(power)));
         StateFactories.powerByIdMap
                 .put(RidiculousFishingPower.ID, new PowerState.PowerFactories(power -> new RidiculousFishingPowerState(power)));
         StateFactories.powerByIdMap
