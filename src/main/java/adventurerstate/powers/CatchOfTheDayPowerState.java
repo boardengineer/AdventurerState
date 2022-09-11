@@ -2,16 +2,16 @@ package adventurerstate.powers;
 
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import theFishing.powers.FullySleevedPower;
+import theFishing.powers.CatchOfTheDayPower;
 
-public class FullySleevedPowerState extends AbstractEasyPowerState {
-    public FullySleevedPowerState(AbstractPower power) {
+public class CatchOfTheDayPowerState extends AbstractEasyPowerState {
+    public CatchOfTheDayPowerState(AbstractPower power) {
         super(power);
     }
 
     @Override
     public AbstractPower loadPower(AbstractCreature targetAndSource) {
-        FullySleevedPower result = new FullySleevedPower(amount);
+        CatchOfTheDayPower result = new CatchOfTheDayPower();
 
         preLoadPower(result);
 

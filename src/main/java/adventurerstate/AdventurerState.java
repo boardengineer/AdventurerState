@@ -76,6 +76,11 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
 
         questByIdMap.put(TheHarpoonState.QUEST_KEY, theHarpoonFactories);
         questByTypeMap.put(TheHarpoon.class, theHarpoonFactories);
+
+        AbstractQuestState.QuestFactories theGemSearchFactories = new AbstractQuestState.QuestFactories(quest -> new TheGemSearchState(quest), jsonObject -> new TheGemSearchState(jsonObject));
+
+        questByIdMap.put(TheGemSearchState.QUEST_KEY, theGemSearchFactories);
+        questByTypeMap.put(TheGemSearch.class, theGemSearchFactories);
     }
 
     private void populateCurrentActionsFactory() {
@@ -94,7 +99,11 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
 
     private void populatePowerFactory() {
         StateFactories.powerByIdMap
+                .put(AllOutPower.ID, new PowerState.PowerFactories(power -> new AllOutPowerState(power)));
+        StateFactories.powerByIdMap
                 .put(AnglerFormPower.ID, new PowerState.PowerFactories(power -> new AnglerFormPowerState(power)));
+        StateFactories.powerByIdMap
+                .put(CatchOfTheDayPower.ID, new PowerState.PowerFactories(power -> new CatchOfTheDayPowerState(power), jsonString -> new CollectorPowerState(jsonString), jsonObject -> new CollectorPowerState(jsonObject)));
         StateFactories.powerByIdMap
                 .put(CollectorPower.ID, new PowerState.PowerFactories(power -> new CollectorPowerState(power), jsonString -> new CollectorPowerState(jsonString), jsonObject -> new CollectorPowerState(jsonObject)));
         StateFactories.powerByIdMap
@@ -102,7 +111,7 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
         StateFactories.powerByIdMap
                 .put(FinishingTouchesPower.ID, new PowerState.PowerFactories(power -> new FinishingTouchesPowerState(power)));
         StateFactories.powerByIdMap
-                .put(FullySleevedPower.ID, new PowerState.PowerFactories(power -> new FullySleevedPowerState(power)));
+                .put(FirstClassPower.ID, new PowerState.PowerFactories(power -> new FirstClassPowerState(power)));
         StateFactories.powerByIdMap
                 .put(MintConditionPower.ID, new PowerState.PowerFactories(power -> new MintConditionPowerState(power)));
         StateFactories.powerByIdMap
@@ -110,9 +119,9 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
         StateFactories.powerByIdMap
                 .put(RidiculousFishingPower.ID, new PowerState.PowerFactories(power -> new RidiculousFishingPowerState(power)));
         StateFactories.powerByIdMap
-                .put(TakeItEasyPower.ID, new PowerState.PowerFactories(power -> new TakeItEasyPowerState(power)));
+                .put(ShinyShivPower.ID, new PowerState.PowerFactories(power -> new ShinyShivePowerState(power)));
         StateFactories.powerByIdMap
-                .put(TripwirePower.ID, new PowerState.PowerFactories(power -> new TripwirePowerState(power)));
+                .put(TakeItEasyPower.ID, new PowerState.PowerFactories(power -> new TakeItEasyPowerState(power)));
         StateFactories.powerByIdMap
                 .put(VexingDealPower.ID, new PowerState.PowerFactories(power -> new VexingDealPowerState(power)));
 

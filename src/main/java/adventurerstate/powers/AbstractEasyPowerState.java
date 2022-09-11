@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import savestate.powers.PowerState;
-import theFishing.powers.AbstractEasyPower;
+import theFishing.powers.AbstractAdventurerPower;
 
 public abstract class AbstractEasyPowerState extends PowerState {
     private final int amount2;
@@ -14,7 +14,7 @@ public abstract class AbstractEasyPowerState extends PowerState {
     public AbstractEasyPowerState(AbstractPower power) {
         super(power);
 
-        AbstractEasyPower actualPower = (AbstractEasyPower) power;
+        AbstractAdventurerPower actualPower = (AbstractAdventurerPower) power;
         this.amount2 = actualPower.amount2;
         this.isTwoAmount = actualPower.isTwoAmount;
         this.canGoNegative2 = actualPower.canGoNegative2;
@@ -38,7 +38,7 @@ public abstract class AbstractEasyPowerState extends PowerState {
         this.canGoNegative2 = powerJson.get("canGoNegative2").getAsBoolean();
     }
 
-    protected void preLoadPower(AbstractEasyPower power) {
+    protected void preLoadPower(AbstractAdventurerPower power) {
         power.amount2 = this.amount2;
         power.isTwoAmount = this.isTwoAmount;
         power.canGoNegative2 = this.canGoNegative2;

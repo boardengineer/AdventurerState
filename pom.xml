@@ -62,8 +62,8 @@
             <systemPath>${basedir}/../_ModTheSpire/mods/BattleAiMod.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>RobotSpaceExplorer</groupId>
-            <artifactId>RobotSpaceExplorer</artifactId>
+            <groupId>UnimportantInfo</groupId>
+            <artifactId>TheAdventurer</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
             <systemPath>${basedir}/../_ModTheSpire/mods/TheAdventurer.jar</systemPath>

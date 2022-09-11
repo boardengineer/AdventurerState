@@ -2,18 +2,20 @@ package adventurerstate.powers;
 
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import theFishing.powers.MintConditionPower;
+import theFishing.powers.ShinyShivPower;
 
-public class MintConditionPowerState extends AbstractEasyPowerState {
-    public MintConditionPowerState(AbstractPower power) {
+public class ShinyShivePowerState extends AbstractEasyPowerState {
+    public ShinyShivePowerState(AbstractPower power) {
         super(power);
     }
 
     @Override
     public AbstractPower loadPower(AbstractCreature targetAndSource) {
-        MintConditionPower result = new MintConditionPower(amount);
+        ShinyShivPower result = new ShinyShivPower();
 
         preLoadPower(result);
+
+        result.amount = amount;
 
         return result;
     }
