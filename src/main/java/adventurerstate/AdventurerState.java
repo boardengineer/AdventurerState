@@ -1,9 +1,6 @@
 package adventurerstate;
 
-import adventurerstate.actions.DiscardPileSetupActionState;
-import adventurerstate.actions.MopUpActionState;
-import adventurerstate.actions.PrecludeActionState;
-import adventurerstate.actions.WanderActionState;
+import adventurerstate.actions.*;
 import adventurerstate.cards.AbstractFishingCardState;
 import adventurerstate.powers.*;
 import adventurerstate.quests.*;
@@ -18,13 +15,10 @@ import savestate.actions.ActionState;
 import savestate.actions.CurrentActionState;
 import savestate.powers.PowerState;
 import theFishing.TheFishing;
-import theFishing.actions.DiscardPileSetupAction;
-import theFishing.actions.MopUpAction;
-import theFishing.actions.PrecludeAction;
-import theFishing.actions.WanderAction;
+import theFishing.actions.*;
 import theFishing.cards.AbstractFishingCard;
-import theFishing.cards.CatchOfTheDay;
 import theFishing.cards.EndsOfTheEarth;
+import theFishing.cards.XMarksTheSpot;
 import theFishing.powers.*;
 import theFishing.quest.quests.*;
 
@@ -94,7 +88,11 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
 
     private void populateActionsFactory() {
         StateFactories.actionByClassMap
+                .put(AbandonQuestAction.class, new ActionState.ActionFactories(action -> new AbandonQuestActionState(action)));
+        StateFactories.actionByClassMap
                 .put(PrecludeAction.class, new ActionState.ActionFactories(action -> new PrecludeActionState()));
+        StateFactories.actionByClassMap
+                .put(StormCompletionAction.class, new ActionState.ActionFactories(action -> new StormCompletionActionState()));
     }
 
     private void populatePowerFactory() {
@@ -114,6 +112,8 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
                 .put(FirstClassPower.ID, new PowerState.PowerFactories(power -> new FirstClassPowerState(power)));
         StateFactories.powerByIdMap
                 .put(MintConditionPower.ID, new PowerState.PowerFactories(power -> new MintConditionPowerState(power)));
+        StateFactories.powerByIdMap
+                .put(PowerPelletPower.ID, new PowerState.PowerFactories(power -> new PowerPelletPowerState(power)));
         StateFactories.powerByIdMap
                 .put(ReservesPower.ID, new PowerState.PowerFactories(power -> new ReservesPowerState(power)));
         StateFactories.powerByIdMap
@@ -140,7 +140,7 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
         // TODO: oh, come on, playing from the discard? what gives?
         BaseMod.removeCard(EndsOfTheEarth.ID, TheFishing.Enums.FISHING_COLOR);
 
-        // TODO: Uses an in-place power.  Will have to be patched if not fixed.
-        BaseMod.removeCard(CatchOfTheDay.ID, TheFishing.Enums.FISHING_COLOR);
+        // TODO: Uses an in-place action.  Will have to be patched if not fixed.
+        BaseMod.removeCard(XMarksTheSpot.ID, TheFishing.Enums.FISHING_COLOR);
     }
 }
