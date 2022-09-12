@@ -2,11 +2,13 @@ package adventurerstate;
 
 import adventurerstate.actions.*;
 import adventurerstate.cards.AbstractFishingCardState;
+import adventurerstate.heuristics.PlayHeuristic;
 import adventurerstate.powers.*;
 import adventurerstate.quests.*;
 import basemod.BaseMod;
 import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
+import battleaimod.BattleAiMod;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import savestate.CardState;
 import savestate.StateElement;
@@ -16,9 +18,7 @@ import savestate.actions.CurrentActionState;
 import savestate.powers.PowerState;
 import theFishing.TheFishing;
 import theFishing.actions.*;
-import theFishing.cards.AbstractFishingCard;
-import theFishing.cards.EndsOfTheEarth;
-import theFishing.cards.XMarksTheSpot;
+import theFishing.cards.*;
 import theFishing.powers.*;
 import theFishing.quest.quests.*;
 
@@ -43,6 +43,8 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
 
         StateElement.ElementFactories stateFactories = new StateElement.ElementFactories(() -> new AdventurerStateElement(), json -> new AdventurerStateElement(json), jsonObject -> new AdventurerStateElement(jsonObject));
         StateFactories.elementFactories.put(AdventurerStateElement.ELEMENT_KEY, stateFactories);
+
+        BattleAiMod.cardPlayHeuristics.add(new PlayHeuristic());
     }
 
     private void populateQuestFactories() {
@@ -142,5 +144,7 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
 
         // TODO: Uses an in-place action.  Will have to be patched if not fixed.
         BaseMod.removeCard(XMarksTheSpot.ID, TheFishing.Enums.FISHING_COLOR);
+        BaseMod.removeCard(FullHouse.ID, TheFishing.Enums.FISHING_COLOR);
+        BaseMod.removeCard(TheBackpack.ID, TheFishing.Enums.FISHING_COLOR);
     }
 }
