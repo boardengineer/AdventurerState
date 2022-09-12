@@ -6,12 +6,12 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import savestate.powers.PowerState;
 import theFishing.powers.AbstractAdventurerPower;
 
-public abstract class AbstractEasyPowerState extends PowerState {
+public abstract class AbstractAdventurerPowerState extends PowerState {
     private final int amount2;
     private final boolean isTwoAmount;
     private final boolean canGoNegative2;
 
-    public AbstractEasyPowerState(AbstractPower power) {
+    public AbstractAdventurerPowerState(AbstractPower power) {
         super(power);
 
         AbstractAdventurerPower actualPower = (AbstractAdventurerPower) power;
@@ -20,7 +20,7 @@ public abstract class AbstractEasyPowerState extends PowerState {
         this.canGoNegative2 = actualPower.canGoNegative2;
     }
 
-    public AbstractEasyPowerState(String jsonString) {
+    public AbstractAdventurerPowerState(String jsonString) {
         super(jsonString);
 
         JsonObject parsed = new JsonParser().parse(jsonString).getAsJsonObject();
@@ -30,7 +30,7 @@ public abstract class AbstractEasyPowerState extends PowerState {
         this.canGoNegative2 = parsed.get("canGoNegative2").getAsBoolean();
     }
 
-    public AbstractEasyPowerState(JsonObject powerJson) {
+    public AbstractAdventurerPowerState(JsonObject powerJson) {
         super(powerJson);
 
         this.amount2 = powerJson.get("amount2").getAsInt();

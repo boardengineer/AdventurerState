@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import theFishing.powers.AllOutPower;
 
-public class AllOutPowerState extends AbstractEasyPowerState {
+public class AllOutPowerState extends AbstractAdventurerPowerState {
     public AllOutPowerState(AbstractPower power) {
         super(power);
     }

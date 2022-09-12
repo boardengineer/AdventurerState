@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import theFishing.powers.ShinyShivPower;
 
-public class ShinyShivePowerState extends AbstractEasyPowerState {
+public class ShinyShivePowerState extends AbstractAdventurerPowerState {
     public ShinyShivePowerState(AbstractPower power) {
         super(power);
     }
