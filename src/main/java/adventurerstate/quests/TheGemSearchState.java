@@ -5,7 +5,7 @@ import theFishing.quest.quests.AbstractQuest;
 import theFishing.quest.quests.TheGemSearch;
 
 public class TheGemSearchState extends AbstractQuestState {
-    public static final String QUEST_KEY = "THE_HARPOON";
+    public static final String QUEST_KEY = "GEM_SEARCH";
 
     public TheGemSearchState(AbstractQuest quest) {
         super(quest);
