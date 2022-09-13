@@ -86,6 +86,8 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
                 .put(WanderAction.class, new CurrentActionState.CurrentActionFactories(action -> new WanderActionState(action)));
         StateFactories.currentActionByClassMap
                 .put(DiscardPileSetupAction.class, new CurrentActionState.CurrentActionFactories(action -> new DiscardPileSetupActionState(action)));
+        StateFactories.currentActionByClassMap
+                .put(XMarksTheSpotAction.class, new CurrentActionState.CurrentActionFactories(action -> new XMarksTheSpotActionState(action)));
     }
 
     private void populateActionsFactory() {
@@ -143,7 +145,6 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
         BaseMod.removeCard(EndsOfTheEarth.ID, TheFishing.Enums.FISHING_COLOR);
 
         // TODO: Uses an in-place action.  Will have to be patched if not fixed.
-        BaseMod.removeCard(XMarksTheSpot.ID, TheFishing.Enums.FISHING_COLOR);
         BaseMod.removeCard(FullHouse.ID, TheFishing.Enums.FISHING_COLOR);
         BaseMod.removeCard(TheBackpack.ID, TheFishing.Enums.FISHING_COLOR);
     }
