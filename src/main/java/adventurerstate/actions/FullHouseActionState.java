@@ -1,6 +1,7 @@
 package adventurerstate.actions;
 
 import basemod.ReflectionHacks;
+import com.evacipated.cardcrawl.mod.stslib.actions.common.SelectCardsAction;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -8,29 +9,35 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import savestate.CardState;
 import savestate.actions.CurrentActionState;
-import theFishing.actions.XMarksTheSpotAction;
+import theFishing.actions.FullHouseAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class XMarksTheSpotActionState implements CurrentActionState {
-    private final CardState[] cardOptions;
+public class FullHouseActionState implements CurrentActionState {
+    private final int[] selectGroupIndeces;
+    private final int numCopies;
 
-    public XMarksTheSpotActionState(AbstractGameAction action) {
+    public FullHouseActionState(AbstractGameAction action) {
         CardGroup selectGroup = ReflectionHacks
-                .getPrivate(action, XMarksTheSpotAction.class, "selectGroup");
+                .getPrivate(action, SelectCardsAction.class, "selectGroup");
 
-        cardOptions = selectGroup.group.stream().map(CardState::forCard).toArray(CardState[]::new);
+        selectGroupIndeces = new int[selectGroup.size()];
+        for (int i = 0; i < selectGroup.size(); i++) {
+            selectGroupIndeces[i] = CardState.indexForCard(selectGroup.group.get(i));
+        }
+
+        numCopies = ReflectionHacks.getPrivate(action, FullHouseAction.class, "numCopies");
     }
 
     @Override
     public AbstractGameAction loadCurrentAction() {
-        ArrayList<AbstractCard> selectGroup = Arrays.stream(cardOptions).map(CardState::loadCard)
-                                                    .collect(Collectors
-                                                            .toCollection(ArrayList::new));
+        ArrayList<AbstractCard> selectGroup = Arrays.stream(selectGroupIndeces).boxed()
+                                                    .map(CardState::cardForIndex).collect(Collectors
+                        .toCollection(ArrayList::new));
 
-        XMarksTheSpotAction result = new XMarksTheSpotAction(selectGroup);
+        FullHouseAction result = new FullHouseAction(selectGroup, numCopies);
 
         // This should make the action only trigger the second half of the update
         ReflectionHacks
@@ -40,12 +47,12 @@ public class XMarksTheSpotActionState implements CurrentActionState {
     }
 
     @SpirePatch(
-            clz = XMarksTheSpotAction.class,
+            clz = SelectCardsAction.class,
             paramtypez = {},
             method = "update"
     )
     public static class HalfDoneActionPatch {
-        public static void Postfix(XMarksTheSpotAction _instance) {
+        public static void Postfix(SelectCardsAction _instance) {
             // Force the action to stay in the the manager until cards are selected
             if (AbstractDungeon.isScreenUp) {
                 _instance.isDone = false;
