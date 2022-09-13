@@ -81,7 +81,7 @@ public class AdventurerState implements PostInitializeSubscriber, EditCardsSubsc
 
     private void populateCurrentActionsFactory() {
         StateFactories.currentActionByClassMap
-                .put(FullHouseAction.class, new CurrentActionState.CurrentActionFactories(action -> new FullHouseActionState(action)));
+                .put(FullHouseAction2.class, new CurrentActionState.CurrentActionFactories(action -> new FullHouseActionState(action)));
         StateFactories.currentActionByClassMap
                 .put(MopUpAction.class, new CurrentActionState.CurrentActionFactories(action -> new MopUpActionState(action)));
         StateFactories.currentActionByClassMap
